@@ -29,6 +29,7 @@ val Player.enchantmentHolders: List<ItemProvidedHolder>
  */
 fun Player.clearEnchantmentCache() {
     inventoryContentsCache.invalidate(this.uniqueId)
+    slotEnchantmentLevelsCache.invalidate(this.uniqueId)
 }
 
 // Convert a map of items to a list of enchantment level holders
