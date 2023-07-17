@@ -66,6 +66,16 @@ private fun Player.pullEnchantmentLevels(): Map<ItemStack, List<EcoEnchantLevel>
     return withItem
 }
 
+// Cached enchantments in slots
+private val slotEnchantmentLevelsCache = Caffeine.newBuilder()
+    .expireAfterWrite(500, TimeUnit.MILLISECONDS)
+    .build<UUID, Map<Int, List<EcoEnchantLevel>>>()
+
+private val Player.cachedSlotEnchantmentLevels: Map<Int, List<EcoEnchantLevel>>
+    get() = slotEnchantmentLevelsCache.get(this.uniqueId) {
+        this.pullEnchantmentLevelsAtSlots()
+    }
+
 private fun Player.pullEnchantmentLevelsAtSlots(): Map<Int, List<EcoEnchantLevel>> {
     val enchantLevels = listMap<Int, EcoEnchantLevel>()
 
@@ -139,6 +149,6 @@ fun Player.getActiveEnchantLevelInSlot(enchant: EcoEnchant, slot: Int): Int {
  * Get the active enchantment level in a numeric slot.
  */
 fun Player.getEnchantLevelInSlot(enchant: EcoEnchant, slot: Int): EcoEnchantLevel? {
-    return this.pullEnchantmentLevelsAtSlots()[slot]
+    return this.cachedSlotEnchantmentLevels[slot]
         ?.firstOrNull { it.enchant == enchant }
 }
