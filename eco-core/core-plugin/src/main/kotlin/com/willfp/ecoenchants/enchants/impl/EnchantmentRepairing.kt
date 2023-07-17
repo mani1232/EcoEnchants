@@ -3,9 +3,9 @@ package com.willfp.ecoenchants.enchants.impl
 import com.willfp.eco.util.DurabilityUtils
 import com.willfp.ecoenchants.EcoEnchantsPlugin
 import com.willfp.ecoenchants.enchants.EcoEnchant
-import com.willfp.ecoenchants.target.EnchantLookup.getActiveEnchantLevelInSlot
-import com.willfp.ecoenchants.target.EnchantLookup.hasEnchantActive
 import com.willfp.ecoenchants.target.TargetSlot
+import com.willfp.ecoenchants.target.getActiveEnchantLevelInSlot
+import com.willfp.ecoenchants.target.hasEnchantActive
 import org.bukkit.Bukkit
 
 class EnchantmentRepairing(

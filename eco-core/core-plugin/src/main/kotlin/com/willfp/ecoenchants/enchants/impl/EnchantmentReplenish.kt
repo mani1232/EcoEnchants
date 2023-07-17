@@ -3,7 +3,7 @@ package com.willfp.ecoenchants.enchants.impl
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.ecoenchants.EcoEnchantsPlugin
 import com.willfp.ecoenchants.enchants.EcoEnchant
-import com.willfp.ecoenchants.target.EnchantLookup.hasEnchantActive
+import com.willfp.ecoenchants.target.hasEnchantActive
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.block.BlockFace

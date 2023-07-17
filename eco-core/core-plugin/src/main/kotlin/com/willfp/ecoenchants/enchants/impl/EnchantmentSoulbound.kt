@@ -9,8 +9,8 @@ import com.willfp.eco.core.fast.fast
 import com.willfp.eco.core.items.Items
 import com.willfp.ecoenchants.EcoEnchantsPlugin
 import com.willfp.ecoenchants.enchants.EcoEnchant
-import com.willfp.ecoenchants.target.EnchantLookup.getActiveEnchantLevelInSlot
-import com.willfp.ecoenchants.target.EnchantLookup.hasEnchantActive
+import com.willfp.ecoenchants.target.getActiveEnchantLevelInSlot
+import com.willfp.ecoenchants.target.hasEnchantActive
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
