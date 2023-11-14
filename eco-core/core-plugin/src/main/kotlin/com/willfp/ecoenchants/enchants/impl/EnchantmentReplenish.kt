@@ -90,7 +90,7 @@ class EnchantmentReplenish(
 
             data.age = 0
 
-            plugin.scheduler.run {
+            plugin.scheduler.run( {
                 block.type = type
                 block.blockData = data
 
@@ -106,7 +106,7 @@ class EnchantmentReplenish(
                         EquipmentSlot.HAND
                     )
                 )
-            }
+            }, block.location)
         }
     }
 }

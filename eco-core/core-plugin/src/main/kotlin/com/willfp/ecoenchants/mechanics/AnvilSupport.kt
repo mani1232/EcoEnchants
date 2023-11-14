@@ -67,7 +67,7 @@ class AnvilSupport(
 
         antiRepeat.add(player.uniqueId)
 
-        this.plugin.scheduler.run {
+        this.plugin.scheduler.run( {
             antiRepeat.remove(player.uniqueId)
 
             val left = event.inventory.getItem(0)?.clone()
@@ -133,7 +133,7 @@ class AnvilSupport(
             event.inventory.repairCost = cost
             event.result = outItem
             event.inventory.setItem(2, outItem)
-        }
+        }, player.location)
     }
 
     private fun doMerge(

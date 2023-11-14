@@ -2,6 +2,7 @@ package com.willfp.ecoenchants.mechanics
 
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.fast.fast
+import com.willfp.eco.core.gui.player
 import com.willfp.eco.util.StringUtils
 import com.willfp.ecoenchants.enchants.EcoEnchants
 import com.willfp.ecoenchants.enchants.wrap
@@ -38,7 +39,7 @@ class GrindstoneSupport(
         val inventory = event.view.topInventory as? GrindstoneInventory ?: return
 
         // Run everything later to await event completion
-        plugin.scheduler.run {
+        plugin.scheduler.run( {
             val topEnchants = inventory.getItem(0)?.fast()?.getEnchants(true) ?: emptyMap()
             val bottomEnchants = inventory.getItem(1)?.fast()?.getEnchants(true) ?: emptyMap()
 
@@ -92,6 +93,6 @@ class GrindstoneSupport(
             }
 
             result.itemMeta = meta
-        }
+        }, event.player.location)
     }
 }

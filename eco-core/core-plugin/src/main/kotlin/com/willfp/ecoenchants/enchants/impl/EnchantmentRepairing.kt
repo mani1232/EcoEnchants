@@ -28,25 +28,27 @@ class EnchantmentRepairing(
 
         for (player in Bukkit.getOnlinePlayers()) {
             if (player.hasEnchantActive(this)) {
-                val repairPerLevel = config.getIntFromExpression("repair-per-level", player)
+                plugin.scheduler.run({
+                    val repairPerLevel = config.getIntFromExpression("repair-per-level", player)
 
-                for ((slot, item) in player.inventory.withIndex()) {
-                    if (item == null) {
-                        continue
+                    for ((slot, item) in player.inventory.withIndex()) {
+                        if (item == null) {
+                            continue
+                        }
+
+                        if (notWhileHolding && slot in SlotTypeHands.getItemSlots(player)) {
+                            continue
+                        }
+
+                        val level = player.getActiveEnchantLevelInSlot(this, slot)
+
+                        if (level == 0) {
+                            continue
+                        }
+
+                        DurabilityUtils.repairItem(item, level * repairPerLevel)
                     }
-
-                    if (notWhileHolding && slot in SlotTypeHands.getItemSlots(player)) {
-                        continue
-                    }
-
-                    val level = player.getActiveEnchantLevelInSlot(this, slot)
-
-                    if (level == 0) {
-                        continue
-                    }
-
-                    DurabilityUtils.repairItem(item, level * repairPerLevel)
-                }
+                }, player.location)
             }
         }
     }

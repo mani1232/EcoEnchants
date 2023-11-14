@@ -154,7 +154,7 @@ class EnchantingTableSupport(
         // I remember writing this back in 8.x.x and deleting it during the recode
         // It's here because books don't work with this event, for some reason
         if (item.type == Material.ENCHANTED_BOOK) {
-            plugin.scheduler.run {
+            plugin.scheduler.run( {
                 if (!event.isCancelled) {
                     val postEnchantItem = event.inventory.getItem(0)
                     val meta = postEnchantItem?.itemMeta as? EnchantmentStorageMeta
@@ -163,7 +163,7 @@ class EnchantingTableSupport(
                     }
                     postEnchantItem?.itemMeta = meta
                 }
-            }
+            }, player.location)
         }
     }
 

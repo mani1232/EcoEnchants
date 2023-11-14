@@ -45,6 +45,6 @@ class TriggerEnchantType(
                     )
                 )
             }
-        }, 2)
+        }, 2, player.location)
     }
 }
