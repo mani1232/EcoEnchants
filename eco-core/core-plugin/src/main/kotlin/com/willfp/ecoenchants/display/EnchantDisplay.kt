@@ -1,5 +1,6 @@
 package com.willfp.ecoenchants.display
 
+import com.rexcantor64.triton.api.TritonAPI
 import com.willfp.eco.core.display.Display
 import com.willfp.eco.core.display.DisplayModule
 import com.willfp.eco.core.display.DisplayPriority
@@ -116,7 +117,24 @@ class EnchantDisplay(private val plugin: EcoEnchantsPlugin) : DisplayModule(plug
             fast.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS)
         }
 
-        fast.lore = enchantLore + lore + notMetLines
+        val unparsed = enchantLore + lore + notMetLines
+        val parsed = arrayListOf<String>()
+        unparsed.forEach {
+            if (player != null && it.isNotEmpty()) {
+                // Triton v3
+                parsed.add(TritonAPI.getInstance().languageParser.parseString(TritonAPI.getInstance().playerManager.get(player.uniqueId).getLang().getName(), TritonAPI.getInstance().config.itemsSyntax, it))
+                // Triton v4
+                //val result = TritonAPI.getInstance().messageParser.translateString(it, TritonAPI.getInstance().playerManager.get(player.uniqueId).language, TritonAPI.getInstance().config.itemsSyntax).result
+                //if (result.isPresent) {
+                //    parsed.add(result.get())
+                //} else {
+                //    parsed.add(it)
+                //}
+            } else {
+                parsed.add(it)
+            }
+        }
+        fast.lore = parsed
     }
 
     override fun revert(itemStack: ItemStack) {

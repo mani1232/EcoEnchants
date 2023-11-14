@@ -7,6 +7,10 @@ load: STARTUP
 folia-supported: true
 
 dependencies:
+  - name: Triton
+    required: true
+    bootstrap: false
+
   - name: eco
     required: true
     bootstrap: false
