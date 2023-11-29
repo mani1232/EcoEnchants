@@ -218,6 +218,7 @@ abstract class EcoEnchant(
     override fun getName(): String = this.id.uppercase()
 
     override fun getMaxLevel(): Int = this.config.getInt("max-level")
+    fun getLevelConstant(): Int = this.config.getInt("level-constant", 8)
 
     override fun getStartLevel(): Int = 1
 
@@ -277,6 +278,14 @@ abstract class EcoEnchant(
         }
 
         return targets.any { it.matches(item) }
+    }
+
+    override fun getMinModifiedCost(level: Int): Int {
+        return startLevel * level + maxLevel
+    }
+
+    override fun getMaxModifiedCost(level: Int): Int {
+        return startLevel * level + maxLevel + getLevelConstant()
     }
 
     override fun displayName(level: Int): Component {
