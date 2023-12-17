@@ -6,7 +6,7 @@ dependencies {
         include("*.jar")
     }
     )
-    compileOnly(project(":eco-core:core-proxy"))
+    //compileOnly(project(":eco-core:core-proxy"))
     compileOnly("io.papermc.paper:paper-api:1.20.2-R0.1-SNAPSHOT")
     compileOnly("net.essentialsx:EssentialsX:2.19.7")
     compileOnly("commons-lang:commons-lang:2.6")
