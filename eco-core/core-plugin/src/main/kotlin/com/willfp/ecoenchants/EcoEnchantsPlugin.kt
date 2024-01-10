@@ -17,7 +17,6 @@ import com.willfp.ecoenchants.display.EnchantSorter
 import com.willfp.ecoenchants.enchant.EcoEnchantLevel
 import com.willfp.ecoenchants.enchant.EcoEnchants
 import com.willfp.ecoenchants.enchant.EnchantGUI
-import com.willfp.ecoenchants.enchant.FoundEcoEnchantLevel
 import com.willfp.ecoenchants.enchant.LoreConversion
 import com.willfp.ecoenchants.enchant.legacyRegisterVanillaEnchantmentData
 import com.willfp.ecoenchants.enchant.registration.EnchantmentRegisterer
@@ -32,15 +31,15 @@ import com.willfp.ecoenchants.mechanics.ExtraItemSupport
 import com.willfp.ecoenchants.mechanics.GrindstoneSupport
 import com.willfp.ecoenchants.mechanics.LootSupport
 import com.willfp.ecoenchants.mechanics.VillagerSupport
-import com.willfp.ecoenchants.target.EnchantLookup.clearEnchantCache
-import com.willfp.ecoenchants.target.EnchantLookup.heldEnchantLevels
+import com.willfp.ecoenchants.target.EnchantFinder
+import com.willfp.ecoenchants.target.EnchantFinder.clearEnchantmentCache
 import com.willfp.libreforge.NamedValue
 import com.willfp.libreforge.loader.LibreforgePlugin
 import com.willfp.libreforge.loader.configs.ConfigCategory
 import com.willfp.libreforge.registerHolderPlaceholderProvider
-import com.willfp.libreforge.registerSpecificHolderProvider
+import com.willfp.libreforge.registerHolderProvider
 import com.willfp.libreforge.registerSpecificRefreshFunction
-import org.bukkit.entity.Player
+import org.bukkit.entity.LivingEntity
 import org.bukkit.event.Listener
 
 internal lateinit var plugin: EcoEnchantsPlugin
@@ -75,19 +74,10 @@ class EcoEnchantsPlugin : LibreforgePlugin() {
     }
 
     override fun handleEnable() {
-        registerSpecificHolderProvider<Player> {
-            it.heldEnchantLevels
-        }
+        registerHolderProvider(EnchantFinder.toHolderProvider())
 
-        registerSpecificRefreshFunction<Player> {
-            it.clearEnchantCache()
-        }
-
-        registerHolderPlaceholderProvider<FoundEcoEnchantLevel> { it, _ ->
-            listOf(
-                NamedValue("level", it.level.level),
-                NamedValue("active_level", it.activeLevel)
-            )
+        registerSpecificRefreshFunction<LivingEntity> {
+            it.clearEnchantmentCache()
         }
 
         registerHolderPlaceholderProvider<EcoEnchantLevel> { it, _ ->
