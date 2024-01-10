@@ -26,19 +26,21 @@ class EnchantmentRepairing(
         val notWhileHolding = config.getBool("not-while-holding")
 
         for (player in Bukkit.getOnlinePlayers()) {
-            if (player.hasEnchantActive(this)) {
-                val repairPerLevel = config.getIntFromExpression("repair-per-level", player)
+            plugin.scheduler.runNow({
+                if (player.hasEnchantActive(this)) {
+                    val repairPerLevel = config.getIntFromExpression("repair-per-level", player)
 
-                for ((item, level) in player.getItemsWithEnchantActive(this)) {
-                    val isHolding = item in SlotTypeHands.getItems(player)
+                    for ((item, level) in player.getItemsWithEnchantActive(this)) {
+                        val isHolding = item in SlotTypeHands.getItems(player)
 
-                    if (notWhileHolding && isHolding) {
-                        continue
+                        if (notWhileHolding && isHolding) {
+                            continue
+                        }
+
+                        DurabilityUtils.repairItem(item, level * repairPerLevel)
                     }
-
-                    DurabilityUtils.repairItem(item, level * repairPerLevel)
                 }
-            }
+            }, player.location)
         }
     }
 }
