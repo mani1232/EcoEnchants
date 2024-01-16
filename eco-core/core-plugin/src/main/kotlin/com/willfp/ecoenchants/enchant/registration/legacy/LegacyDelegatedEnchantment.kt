@@ -76,6 +76,14 @@ class LegacyDelegatedEnchantment(
     override fun isDiscoverable(): Boolean =
         enchant.isObtainableThroughDiscovery
 
+    override fun getMinModifiedCost(p0: Int): Int {
+        return 0
+    }
+
+    override fun getMaxModifiedCost(p0: Int): Int {
+        return 0
+    }
+
     override fun conflictsWith(other: Enchantment): Boolean =
         enchant.conflictsWith(other)
 
